@@ -1,0 +1,141 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Student Registration Form</title>
+    <style>
+        body {
+            font-family: Arial;
+            background: #eaf2f8;
+            display: flex;
+            justify-content: center;
+            padding: 30px;
+        }
+
+        .container {
+            background: white;
+            padding: 25px;
+            width: 350px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px gray;
+        }
+
+        h2 {
+            text-align: center;
+            color: #2455a4;
+        }
+
+        input, button {
+            width: 100%;
+            padding: 10px;
+            margin: 8px 0;
+            box-sizing: border-box;
+        }
+
+        button {
+            background: #2455a4;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        .error {
+            color: red;
+            font-size: 13px;
+        }
+
+        #success {
+            color: green;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+<div class="container">
+    <h2>Student Registration</h2>
+
+    <form id="registrationForm" novalidate>
+
+        <input type="text" id="name"
+               placeholder="Enter Student Name">
+        <div class="error" id="nameError"></div>
+
+        <input type="text" id="email"
+               placeholder="Enter Email">
+        <div class="error" id="emailError"></div>
+
+        <input type="text" id="phone"
+               placeholder="Enter 10-digit Phone Number">
+        <div class="error" id="phoneError"></div>
+
+        <input type="password" id="password"
+               placeholder="Enter Password">
+        <div class="error" id="passwordError"></div>
+
+        <input type="password" id="confirmPassword"
+               placeholder="Confirm Password">
+        <div class="error" id="confirmError"></div>
+
+        <button type="submit" id="submit">Register</button>
+
+        <p id="success"></p>
+    </form>
+</div>
+
+<script>
+document.getElementById("registrationForm")
+.addEventListener("submit", function(event) {
+
+    event.preventDefault();
+
+    let name = document.getElementById("name").value.trim();
+    let email = document.getElementById("email").value.trim();
+    let phone = document.getElementById("phone").value.trim();
+    let password = document.getElementById("password").value;
+    let confirmPassword =
+        document.getElementById("confirmPassword").value;
+
+    let valid = true;
+
+    document.querySelectorAll(".error").forEach(e => e.innerText = "");
+    document.getElementById("success").innerText = "";
+
+    if (name === "") {
+        document.getElementById("nameError").innerText =
+            "Name is required";
+        valid = false;
+    }
+
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        document.getElementById("emailError").innerText =
+            "Enter a valid email";
+        valid = false;
+    }
+
+    if (!/^[0-9]{10}$/.test(phone)) {
+        document.getElementById("phoneError").innerText =
+            "Phone number must contain 10 digits";
+        valid = false;
+    }
+
+    if (password.length < 8) {
+        document.getElementById("passwordError").innerText =
+            "Password must contain at least 8 characters";
+        valid = false;
+    }
+
+    if (password !== confirmPassword || confirmPassword === "") {
+        document.getElementById("confirmError").innerText =
+            "Passwords do not match";
+        valid = false;
+    }
+
+    if (valid) {
+        document.getElementById("success").innerText =
+            "Registration Successful!";
+    }
+});
+</script>
+</body>
+</html>
